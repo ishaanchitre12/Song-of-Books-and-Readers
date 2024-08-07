@@ -1,0 +1,66 @@
+body {
+  font-family: 'Cinzel', serif;
+  background-color: #1C1C1C;
+  color: #F5F5F5;
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2, h3, h4, p, label {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+h1 {
+  color: #DAA520; /* Golden color */
+  border-bottom: 2px solid #8B0000; /* Dark red */
+  padding-bottom: 10px;
+}
+
+h2, h3 {
+  color: #8B0000; /* Dark red */
+}
+
+h3 {
+  margin-top: 0px;
+}
+
+p {
+  margin-top: 0px;
+}
+
+.book-entry-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.book-entry, .register-page, .login-page {
+  background-color: #2E2E2E;
+  border: 1px solid #8B0000;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.book-entry {
+  width: 100%;
+}
+
+.book-cover-image {
+  float: left;
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin: 0px 15px 15px 0px;
+}
+
+.book-title {
+  color: #DAA520;
+}
+
+.book-author {
+  color: #F5F5F5;
+}
+
+.book-description {
+  color: #B0B0B0;
+}
