@@ -8,15 +8,14 @@ const app = express();
 const port = 4000;
 app.use(cors());
 
-db.connect();
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", async (req, res) => {
-    const result = await db.query("SELECT * FROM booksdata");
-    res.json(result.rows);
-})
+// register and login routes
+app.use("/auth", require("./routes/jwtAuth"));
+
+// get books route
+app.use("/books", require("./routes/books"))
 
 app.listen(port, () => {
     console.log(`server running on port ${port}`);
