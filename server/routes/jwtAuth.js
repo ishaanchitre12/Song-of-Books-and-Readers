@@ -13,7 +13,7 @@ router.post("/register", async (req, res) => {
         // check if user already exists
         const existingUser = await db.query("SELECT * FROM users WHERE email = $1", [email]);
         if (existingUser.rows.length > 0) {
-            res.redirect("/login");
+            return res.status(401).json("User already exists!");
         } else {
             // bcrypt user password
             const saltRounds = await bcrypt.genSalt(10);
@@ -30,41 +30,46 @@ router.post("/register", async (req, res) => {
 
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server error");
+        return res.status(500).json("ERROR 500: Server error");
     }
 })
 
 // login route
 router.post("/login", async (req, res) => {
+    console.log(req.body);
     try {
         // destructure req.body
         const {email, password} = req.body;
 
         // check if user doesn't exist
-        const user = await db.query("SELECT * FROM user WHERE email = $1", [email]);
+        const user = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+        console.log(user);
         if (user.rows.length === 0) {
-            res.status(401).send("User does not exist. Try registering instead");
+            console.log("fail");
+            return res.status(401).json("Email or password is incorrect!");
         } else {
             // check password
             const valid = await bcrypt.compare(password, user.rows[0].password);
             if (!valid) {
-                res.redirect("/login");
+                return res.status(401).json("Email or password is incorrect!");
             } else {
                 // give jwt token
                 const token = jwtGenerator(user.rows[0].id);
+                console.log(token);
                 res.json({token});
             }
         }
     } catch (err) {
-        res.status(500).send("Server error");
+        return res.status(500).json("ERROR 500: Server error");
     }
 })
 
-router.get("is-verified", authorization, async (req, res) => {
+router.get("/verify", authorization, async (req, res) => {
+    console.log("received");
     try {
         res.json(true);
     } catch (err) {
-        res.status(500).send("Server error");
+        return res.status(500).json("ERROR 500: Server error");
     }
 })
 

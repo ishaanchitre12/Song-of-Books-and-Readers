@@ -28,10 +28,88 @@ p {
   margin-top: 0px;
 }
 
-.book-entry-container {
+button, .drop-down {
+  background-color: #8B0000;
+  color: #F5F5F5;
+  border: none;
+  padding: 10px 15px;
+  font-family: 'Cinzel', serif;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover, .drop-down:hover {
+  background-color: #FF4500;
+}
+
+input[type="text"], input[type="date"], input[type="password"], textarea, .drop-down {
+  background-color: #2E2E2E;
+  color: #F5F5F5;
+  border: 1px solid #DAA520;
+  padding: 10px;
+  font-family: 'Cormorant Garamond', serif;
+  border-radius: 5px;
+}
+
+.title-page-container {
   display: flex;
-  flex-wrap: wrap;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-page {
+  background-image: url(../assets/icons/throne-svgrepo-com.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.title-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.register-page-container, .login-page-container {
+  display: flex;
+  width: 50%;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 25%;
+}
+
+.register-page, .login-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   gap: 20px;
+}
+
+#register-page-title, #login-page-title {
+  border: none;
+  align-self: flex-start;
+}
+
+.email-container, .password-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.books-header {
+  position: relative;
+}
+
+.books-header button {
+  position: absolute;
+  bottom: 35%;
+  left: 95%;
 }
 
 .book-entry, .register-page, .login-page {
@@ -43,6 +121,12 @@ p {
 
 .book-entry {
   width: 100%;
+}
+
+.book-entry-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .book-cover-image {
