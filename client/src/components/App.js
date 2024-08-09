@@ -7,6 +7,9 @@ import Books from "./Books";
 import Home from "./Home";
 import Register from "./Register";
 import Login from "./Login";
+import NewNote from "./NewNote";
+import ViewNotes from "./ViewNotes";
+import EditNotes from "./EditNotes";
 
 function App() {
   const SERVER_URL = "http://localhost:4000/";
@@ -41,7 +44,12 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/login" element={!isAuthenticated ? <Login checkAuth={checkAuth}/> : <Navigate to="/books"/>}/>
         <Route path="/register" element={!isAuthenticated ? <Register checkAuth={checkAuth}/> : <Navigate to="/login"/>}/>
-        <Route path="/books" element={isAuthenticated ? <Books checkAuth={checkAuth}/> : <Navigate to="/login"/>}/>
+        <Route path="/books">
+          <Route index element={isAuthenticated ? <Books checkAuth={checkAuth}/> : <Navigate to="/login"/>}/>
+          <Route path="add-note/:id" element={isAuthenticated ? <NewNote /> : <Navigate to="/login"/>}/>
+          <Route path="view-notes/:id" element={isAuthenticated ? <ViewNotes /> : <Navigate to="/login"/>}/>
+          <Route path="edit-notes/:id" element={isAuthenticated ? <EditNotes /> : <Navigate to="/login"/>}/>
+        </Route>
       </Routes>
       <ToastContainer/>
     </div>

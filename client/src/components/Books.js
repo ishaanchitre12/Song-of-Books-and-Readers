@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import BookEntry from "./BookEntry";
+import ButtonBar from "./ButtonBar";
 import axios from "axios";
 
 function Books(props) {
@@ -31,12 +32,18 @@ function Books(props) {
     return (
         <div>
             <div class="books-header">
-                <h1>Book Notes</h1>
+                <h1>Book Gallery</h1>
                 <button onClick={(event) => logout(event)}>Logout</button>
             </div>
             <div class="book-entry-container">
-                {books.map(book => <BookEntry book={book}/>)}
+                {books.map(book => (
+                    <>
+                        <BookEntry book={book}/>
+                        <ButtonBar bookId={book.id}/>
+                    </>
+                ))}
             </div>
+            <button>Add Book</button>
         </div>
     );
 }
