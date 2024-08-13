@@ -15,7 +15,6 @@ function ButtonBar(props) {
     async function getNotes() {
         try {
             await axios.get(SERVER_URL + props.bookId, config).then((res) => {
-                console.log(res);
                 if (res.data.length > 0) {
                     setButtons(prevButtons => [prevButtons[0], <ViewNotesButton bookId={props.bookId}/>, <EditNotesButton bookId={props.bookId}/>, prevButtons[1]])
                 }

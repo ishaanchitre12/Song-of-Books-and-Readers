@@ -11,12 +11,30 @@ router.get("/", authorization, async (req, res) => {
     }
 })
 
+router.get("/:id", authorization, async (req, res) => {
+    console.log("called");
+    try {
+        const result = await db.query("SELECT * FROM booksdata WHERE id = $1", [req.params.id]);
+        res.json(result.rows);
+    } catch (err) {
+        return res.status(500).json("Server error");
+    }
+})
+
 router.get("/edit/:id", authorization, async (req, res) => {
     try {
-        const result = await db.query("SELECT * FROM notesdata WHERE user_id = $1\
-            AND book_id = $2", [req.user, req.params.id]);
+        const result = await db.query("SELECT * FROM notesdata WHERE book_id = $1", [req.params.id]);
         res.json(result.rows);
     } catch (error) {
+        return res.status(500).json("Server error");
+    }
+})
+
+router.get("/review/:id", authorization, async (req, res) => {
+    try {
+        const result = await db.query("SELECT * FROM reviews WHERE book_id = $1", [req.params.id]);
+        res.json(result.rows);
+    } catch (err) {
         return res.status(500).json("Server error");
     }
 })

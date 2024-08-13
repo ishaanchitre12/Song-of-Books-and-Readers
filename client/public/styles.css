@@ -155,3 +155,72 @@ input[type="text"], input[type="date"], input[type="password"], textarea, .drop-
 .book-description {
   color: #B0B0B0;
 }
+
+.book-notes-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.finished-attributes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #2E2E2E;
+  border: 1px solid #8B0000;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 50px 0px;
+}
+
+.edit-container {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+.empty-div {
+  width: 80%;
+}
+
+.icon {
+  background-color: #1C1C1C;
+  border-radius: 50%;
+  border: none;
+  align-self: start;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
+    url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
+    url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
