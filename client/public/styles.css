@@ -162,6 +162,16 @@ input[type="text"], input[type="date"], input[type="password"], textarea, .drop-
   width: 50%;
 }
 
+.notes-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.clear-img {
+  clear: left;
+}
+
 .finished-attributes {
   display: flex;
   flex-direction: column;

@@ -1,11 +1,11 @@
 import React from "react";
 
-function EditButton(props) {
+function CancelButton(props) {
     return (
         <button className="icon" onClick={() => props.handleClick(props.id)}>
-            <span className="material-icons">edit</span>
+            <span className="material-icons">cancel</span>
         </button>
-    );
+    )
 }
 
-export default EditButton;
+export default CancelButton;

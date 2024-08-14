@@ -2,8 +2,9 @@ import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import axios from "axios";
 import InProgressReview from "./InProgressReview";
+import InProgressNote from "./InProgressNote";
 
-function NewNote() {
+function NewNote(props) {
     const SERVER_URL = "http://localhost:4000/books/";
     const config = {
         headers: {token: localStorage.token}
@@ -50,13 +51,9 @@ function NewNote() {
             <h1>Add Your Notes</h1>
             <img src={book.imagelink}></img>
             {!review && <InProgressReview/>}
-            <form className="book-notes-container">
-                <label for="noteDate">Date:</label>
-                <input type="date" name="noteDate" required/>
-                <label for="notes">Notes:</label>
-                <textarea name="notes" wrap="soft" rows="30" required></textarea>
-                <button type="submit">Submit</button>
-            </form>
+            <div className="book-notes-container">
+                <InProgressNote/>
+            </div>
         </>
     )
 }

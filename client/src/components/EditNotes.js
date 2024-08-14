@@ -5,6 +5,8 @@ import FinishedReview from "./FinishedReview";
 import EditButton from "./buttons/EditButton";
 import DeleteButton from "./buttons/DeleteButton";
 import FinishedNote from "./FinishedNote";
+import InProgressNote from "./InProgressNote";
+import CancelButton from "./buttons/CancelButton";
 
 function EditNotes() {
     const SERVER_URL = "http://localhost:4000/books/";
@@ -22,6 +24,7 @@ function EditNotes() {
     });
     const [notes, setNotes] = useState([]);
     const [review, setReview] = useState(null);
+    const [inProgressNotes, setInProgressNotes] = useState([]);
 
     async function getBook() {
         try {
@@ -55,6 +58,29 @@ function EditNotes() {
         }
     }
 
+    function edit(id) {
+        setInProgressNotes(prevNotes => [...prevNotes, id]);
+    }
+
+    function clear(id) {
+        setInProgressNotes(prevNotes => {
+            return prevNotes.filter(note => note !== id);
+        });
+    }
+
+    async function submitNote(note) {
+        try {
+            const response = await axios.patch(`${SERVER_URL}/edit/${id}`, note, config);
+            clear(note.id);
+            setNotes(prevNotes => {
+                return prevNotes.filter(n => n.id !== note.id);
+            });
+            setNotes(prevNotes => [...prevNotes, response.data[0]]);
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
     useEffect(() => {
         getBook();
         getNotes();
@@ -74,11 +100,20 @@ function EditNotes() {
                 </div>
             }
             {notes.map(note => (
-                <div className="edit-container">
-                    <FinishedNote note={note}/>
+                <div className="edit-container clear-img">
+                    {console.log(inProgressNotes)}
+                    {inProgressNotes.includes(note.id) ? 
+                        <div className="book-notes-container">
+                            <InProgressNote note={note} handleSubmit={submitNote}/>
+                        </div> : 
+                        <FinishedNote key={note.id} note={note}/>
+                    }
                     <div class="empty-div"></div>
-                    <EditButton/>
-                    <DeleteButton/>
+                    {inProgressNotes.includes(note.id) ? 
+                        <CancelButton id={note.id} handleClick={clear}/> :
+                        <EditButton id={note.id} handleClick={edit}/> 
+                    }
+                    <DeleteButton />
                 </div>
             ))}
             

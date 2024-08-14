@@ -30,6 +30,17 @@ router.get("/edit/:id", authorization, async (req, res) => {
     }
 })
 
+router.patch("/edit/:id", authorization, async (req, res) => {
+    const {id, noteDate, notes} = req.body;
+    try {
+        const result = await db.query("UPDATE notesdata SET note_date = $1, notes = $2\
+            WHERE id = $3 RETURNING *", [noteDate, notes, id]);
+        res.json(result.rows);
+    } catch (err) {
+        return res.status(500).json("Server error");
+    }
+})
+
 router.get("/review/:id", authorization, async (req, res) => {
     try {
         const result = await db.query("SELECT * FROM reviews WHERE book_id = $1", [req.params.id]);
