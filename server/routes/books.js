@@ -30,6 +30,17 @@ router.get("/edit/:id", authorization, async (req, res) => {
     }
 })
 
+router.post("/edit/:id", authorization, async (req, res) => {
+    const {noteDate, notes} = req.body;
+    try {
+        const result = await db.query("INSERT INTO notesdata (note_date, notes, book_id, user_id)\
+            VALUES ($1, $2, $3, $4) RETURNING *", [noteDate, notes, req.params.id, req.user]);
+        res.json(result.rows);
+    } catch (error) {
+        return res.status(500).json("Server error");
+    }
+})
+
 router.patch("/edit/:id", authorization, async (req, res) => {
     const {id, noteDate, notes} = req.body;
     try {
@@ -41,9 +52,52 @@ router.patch("/edit/:id", authorization, async (req, res) => {
     }
 })
 
+router.delete("/edit/:noteId", authorization, async (req, res) => {
+    try {
+        const result = await db.query("DELETE FROM notesdata WHERE id = $1", [req.params.noteId]);
+        res.json(result.rows);
+    } catch (err) {
+        return res.status(500).json("Server error");
+    }
+})
+
 router.get("/review/:id", authorization, async (req, res) => {
     try {
         const result = await db.query("SELECT * FROM reviews WHERE book_id = $1", [req.params.id]);
+        res.json(result.rows);
+    } catch (err) {
+        return res.status(500).json("Server error");
+    }
+})
+
+router.post("/review/:id", authorization, async (req, res) => {
+    try {
+        if (req.body.finished) {
+            const {dateFinished, rating} = req.body;
+            const result = await db.query("INSERT INTO reviews (date_finished, rating, book_id, user_id)\
+                VALUES ($1, $2, $3, $4)\
+                RETURNING *", [dateFinished, rating, req.params.id, req.user]);
+            res.json(result.rows);
+        }
+    } catch (err) {
+        return res.status(500).json("Server error");
+    }
+})
+
+router.patch("/review/:id", authorization, async (req, res) => {
+    const {dateFinished, rating} = req.body;
+    try {
+        const result = await db.query("UPDATE reviews SET date_finished = $1, rating = $2\
+            WHERE book_id = $3 RETURNING *", [dateFinished, rating, req.params.id]);
+        res.json(result.rows);
+    } catch (err) {
+        return res.status(500).json("Server error");
+    }
+})
+
+router.delete("/review/:id", authorization, async(req, res) => {
+    try {
+        const result = await db.query("DELETE FROM reviews WHERE book_id = $1", [req.params.id]);
         res.json(result.rows);
     } catch (err) {
         return res.status(500).json("Server error");

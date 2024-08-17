@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {useParams} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
 import InProgressReview from "./InProgressReview";
 import InProgressNote from "./InProgressNote";
@@ -19,6 +19,8 @@ function NewNote(props) {
         user_id: ""
     });
     const [review, setReview] = useState(null);
+    const [submit, setSubmit] = useState(false);
+    const navigate = useNavigate();
 
     async function getBook() {
         try {
@@ -41,6 +43,24 @@ function NewNote(props) {
         }
     }
 
+    async function submitNote(note) {
+        try {
+            setSubmit(true);
+            const response = await axios.post(`${SERVER_URL}/edit/${id}`, note, config);
+            navigate(`/books/view-notes/${id}`);
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    async function submitReview(review) {
+        try {
+            const response = await axios.post(`${SERVER_URL}/review/${id}`, review, config);
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
     useEffect(() => {
         getBook();
         getReview();
@@ -50,9 +70,9 @@ function NewNote(props) {
         <>
             <h1>Add Your Notes</h1>
             <img src={book.imagelink}></img>
-            {!review && <InProgressReview/>}
+            {!review && <InProgressReview submit={submit} handleSubmit={submitReview}/>}
             <div className="book-notes-container">
-                <InProgressNote/>
+                <InProgressNote handleSubmit={submitNote}/>
             </div>
         </>
     )

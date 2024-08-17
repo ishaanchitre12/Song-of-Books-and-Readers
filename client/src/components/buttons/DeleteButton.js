@@ -1,7 +1,11 @@
 import React from "react";
 
-function DeleteButton() {
-    return <button className="icon"><span className="material-icons">delete</span></button>
+function DeleteButton(props) {
+    return (
+        <button className="icon" onClick={() => props.handleClick(props.id)}>
+            <span className="material-icons">delete</span>
+        </button>
+    );
 }
 
 export default DeleteButton;
