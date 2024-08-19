@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 import BookEntry from "./BookEntry";
 import ButtonBar from "./ButtonBar";
 import axios from "axios";
@@ -6,6 +7,7 @@ import axios from "axios";
 function Books(props) {
     const SERVER_URL = "http://localhost:4000/books/";
     const [books, setBooks] = useState([]);
+    const navigate = useNavigate();
 
     async function getBooks() {
         try {
@@ -39,11 +41,11 @@ function Books(props) {
                 {books.map(book => (
                     <>
                         <BookEntry book={book}/>
-                        <ButtonBar bookId={book.id}/>
+                        <ButtonBar bookId={book.id} rerender={getBooks}/>
                     </>
                 ))}
             </div>
-            <button>Add Book</button>
+            <button onClick={() => navigate("/books/new")}>Add Book</button>
         </div>
     );
 }

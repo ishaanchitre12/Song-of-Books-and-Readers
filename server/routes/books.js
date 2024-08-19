@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const authorization = require("../middleware/authorization");
 const db = require("../db");
+const axios = require("axios");
 
 router.get("/", authorization, async (req, res) => {
     try {
@@ -16,6 +17,30 @@ router.get("/:id", authorization, async (req, res) => {
     try {
         const result = await db.query("SELECT * FROM booksdata WHERE id = $1", [req.params.id]);
         res.json(result.rows);
+    } catch (err) {
+        return res.status(500).json("Server error");
+    }
+})
+
+router.post("/", authorization, async (req, res) => {
+    try {
+        const {title, author, description, imageLink} = req.body;
+        const result = await db.query("INSERT INTO booksdata (title, author, description, imagelink, user_id)\
+            VALUES ($1, $2, $3, $4, $5)\
+            RETURNING *", [title, author, description, imageLink, req.user]);
+        res.json(result.rows);
+    } catch (err) {
+        return res.status(500).json("Server error");
+    }
+})
+
+router.delete("/:id", authorization, async (req, res) => {
+    const {id} = req.params.id;
+    try {
+        const books = await db.query("DELETE FROM booksdata WHERE id = $1", [id]);
+        const notes = await db.query("DELETE FROM notesdata WHERE book_id = $1", [id]);
+        const review = await db.query("DELETE FROM reviews WHERE book_id = $1", [id]);
+        res.json(books.rows);
     } catch (err) {
         return res.status(500).json("Server error");
     }

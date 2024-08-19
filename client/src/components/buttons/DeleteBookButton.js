@@ -1,10 +1,23 @@
 import React from "react";
-import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 function DeleteBookButton(props) {
-    const navigate = useNavigate();
+    const SERVER_URL = "http://localhost:4000/books";
+    const config = {
+        headers: {token: localStorage.token}
+    };
+
+    async function deleteBook() {
+        try {
+            const response = await axios.delete(`${SERVER_URL}/${props.bookId}`, config);
+            props.onClick();
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
     return (
-        <button onClick={() => navigate(`/books/delete-book/${props.bookId}`)}>Delete Book</button>
+        <button onClick={deleteBook}>Delete Book</button>
     )
 }
 

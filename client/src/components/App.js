@@ -10,6 +10,7 @@ import Login from "./Login";
 import NewNote from "./NewNote";
 import ViewNotes from "./ViewNotes";
 import EditNotes from "./EditNotes";
+import NewBook from "./NewBook";
 
 function App() {
   const SERVER_URL = "http://localhost:4000/";
@@ -46,6 +47,7 @@ function App() {
         <Route path="/register" element={!isAuthenticated ? <Register checkAuth={checkAuth}/> : <Navigate to="/login"/>}/>
         <Route path="/books">
           <Route index element={isAuthenticated ? <Books checkAuth={checkAuth}/> : <Navigate to="/login"/>}/>
+          <Route path="new" element={isAuthenticated ? <NewBook /> : <Navigate to="/login"/>}/>
           <Route path="add-note/:id" element={isAuthenticated ? <NewNote /> : <Navigate to="/login"/>}/>
           <Route path="view-notes/:id" element={isAuthenticated ? <ViewNotes /> : <Navigate to="/login"/>}/>
           <Route path="edit-notes/:id" element={isAuthenticated ? <EditNotes /> : <Navigate to="/login"/>}/>

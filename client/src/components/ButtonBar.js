@@ -10,7 +10,7 @@ function ButtonBar(props) {
     const config = {
         headers: {token: localStorage.token}
     };
-    const [buttons, setButtons] = useState([<AddNoteButton bookId={props.bookId}/>, <DeleteBookButton bookId={props.bookId}/>]);
+    const [buttons, setButtons] = useState([<AddNoteButton bookId={props.bookId}/>, <DeleteBookButton bookId={props.bookId} onClick={props.rerender}/>]);
 
     async function getNotes() {
         try {
