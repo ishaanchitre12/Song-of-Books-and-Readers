@@ -241,3 +241,7 @@ input[type="text"], input[type="date"], input[type="password"], textarea, .drop-
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+
+.star {
+  color: #F9DB78;
+}
