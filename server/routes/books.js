@@ -13,7 +13,6 @@ router.get("/", authorization, async (req, res) => {
 })
 
 router.get("/:id", authorization, async (req, res) => {
-    console.log("called");
     try {
         const result = await db.query("SELECT * FROM booksdata WHERE id = $1", [req.params.id]);
         res.json(result.rows);
@@ -35,7 +34,8 @@ router.post("/", authorization, async (req, res) => {
 })
 
 router.delete("/:id", authorization, async (req, res) => {
-    const {id} = req.params.id;
+    const {id} = req.params;
+    console.log(id);
     try {
         const books = await db.query("DELETE FROM booksdata WHERE id = $1", [id]);
         const notes = await db.query("DELETE FROM notesdata WHERE book_id = $1", [id]);
@@ -123,6 +123,54 @@ router.patch("/review/:id", authorization, async (req, res) => {
 router.delete("/review/:id", authorization, async(req, res) => {
     try {
         const result = await db.query("DELETE FROM reviews WHERE book_id = $1", [req.params.id]);
+        res.json(result.rows);
+    } catch (err) {
+        return res.status(500).json("Server error");
+    }
+})
+
+router.get("/sort-by/rating", authorization, async (req, res) => {
+    try {
+        const reviews = await db.query("SELECT * FROM reviews WHERE user_id = $1\
+            ORDER BY rating ASC", [req.user]);
+        let sortedBooks = [];
+        let iterations = 0;
+        reviews.rows.forEach(async review => {
+            const books = await db.query("SELECT * FROM booksdata WHERE id = $1", [review.book_id]);
+            sortedBooks.push(books.rows[0]);
+            iterations++;
+            if (iterations === reviews.rows.length) {
+                res.json(sortedBooks);
+            }
+        });        
+    } catch (err) {
+        return res.status(500).json("Server error");
+    }
+})
+
+router.get("/sort-by/date-finished", authorization, async (req, res) => {
+    try {
+        const reviews = await db.query("SELECT * FROM reviews WHERE user_id = $1\
+            ORDER BY date_finished ASC", [req.user]);
+        let sortedBooks = [];
+        let iterations = 0;
+        reviews.rows.forEach(async review => {
+            const books = await db.query("SELECT * FROM booksdata WHERE id = $1", [review.book_id]);
+            sortedBooks.push(books.rows[0]);
+            iterations++;
+            if (iterations === reviews.rows.length) {
+                res.json(sortedBooks);
+            }
+        });        
+    } catch (err) {
+        return res.status(500).json("Server error");
+    }
+})
+
+router.get("/sort-by/title", authorization, async (req, res) => {
+    try {
+        const result = await db.query("SELECT * FROM booksdata WHERE user_id = $1\
+            ORDER BY title ASC", [req.user]);
         res.json(result.rows);
     } catch (err) {
         return res.status(500).json("Server error");

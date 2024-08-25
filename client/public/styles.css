@@ -102,6 +102,10 @@ input[type="text"], input[type="date"], input[type="password"], textarea, .drop-
   flex-direction: column;
 }
 
+.drop-down {
+  margin-bottom: 20px;
+}
+
 .books-header {
   position: relative;
 }

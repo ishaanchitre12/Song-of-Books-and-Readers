@@ -10,9 +10,13 @@ function ButtonBar(props) {
     const config = {
         headers: {token: localStorage.token}
     };
-    const [buttons, setButtons] = useState([<AddNoteButton bookId={props.bookId}/>, <DeleteBookButton bookId={props.bookId} onClick={props.rerender}/>]);
+    const [buttons, setButtons] = useState([<AddNoteButton bookId={props.bookId}/>, <DeleteBookButton bookId={props.bookId} onClick={() => {
+        props.rerender();
+        getNotes();
+    }}/>]);
 
     async function getNotes() {
+        console.log(props.bookId);
         try {
             await axios.get(SERVER_URL + props.bookId, config).then((res) => {
                 if (res.data.length > 0) {
