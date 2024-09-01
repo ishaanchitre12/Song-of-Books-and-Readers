@@ -188,7 +188,17 @@ input[type="text"], input[type="date"], input[type="password"], textarea, .drop-
 
 .edit-container {
   display: flex;
+  position: relative;
   margin-bottom: 40px;
+}
+
+.edit-notes-attributes {
+  width: 60%;
+}
+
+.edit-buttons {
+  position: absolute;
+  right: 1%;
 }
 
 .view-notes {

@@ -132,7 +132,7 @@ router.delete("/review/:id", authorization, async(req, res) => {
 router.get("/sort-by/rating", authorization, async (req, res) => {
     try {
         const reviews = await db.query("SELECT * FROM reviews WHERE user_id = $1\
-            ORDER BY rating ASC", [req.user]);
+            ORDER BY rating DESC", [req.user]);
         let sortedBooks = [];
         let iterations = 0;
         reviews.rows.forEach(async review => {

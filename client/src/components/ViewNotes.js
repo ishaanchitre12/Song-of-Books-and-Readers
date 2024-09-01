@@ -65,7 +65,7 @@ function ViewNotes() {
             <h2>By: {book.author}</h2>
             <img className="book-cover-image" src={book.imagelink}/>
             {review && <div className="view-notes"><FinishedReview review={review}/></div>}
-            {notes.map(note => <div className="view-notes"><FinishedNote note={note}/></div>)}
+            {notes.map(note => <div key={note.id} className="view-notes"><FinishedNote note={note}/></div>)}
         </>
     )
 }

@@ -141,14 +141,16 @@ function EditNotes() {
             <div className="edit-container">
                 {inProgressReview ? <InProgressReview review={review} handleSubmit={submitReview}/> : <FinishedReview review={review}/>}
                 <div class="empty-div"></div>
-                {inProgressReview ? <CancelButton handleClick={clearReview}/> : <EditButton handleClick={editReview}/>}
-                <DeleteButton handleClick={deleteReview}/>
+                <div className="edit-buttons">
+                    {inProgressReview ? <CancelButton handleClick={clearReview}/> : <EditButton handleClick={editReview}/>}
+                    <DeleteButton handleClick={deleteReview}/>
+                </div>
             </div>
                 
                 
             }
             {notes.map(note => (
-                <div className="edit-container clear-img">
+                <div key={note.id} className="edit-container clear-img">
                     {console.log(inProgressNotes)}
                     {inProgressNotes.includes(note.id) ? 
                         <div className="book-notes-container">
@@ -157,11 +159,13 @@ function EditNotes() {
                         <FinishedNote key={note.id} note={note}/>
                     }
                     <div class="empty-div"></div>
-                    {inProgressNotes.includes(note.id) ? 
-                        <CancelButton id={note.id} handleClick={clearNote}/> :
-                        <EditButton id={note.id} handleClick={editNote}/> 
-                    }
-                    <DeleteButton id={note.id} handleClick={deleteNote}/>
+                    <div className="edit-buttons">
+                        {inProgressNotes.includes(note.id) ? 
+                            <CancelButton id={note.id} handleClick={clearNote}/> :
+                            <EditButton id={note.id} handleClick={editNote}/> 
+                        }
+                        <DeleteButton id={note.id} handleClick={deleteNote}/>
+                    </div>
                 </div>
             ))}
             

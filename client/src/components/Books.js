@@ -76,8 +76,8 @@ function Books(props) {
             <div class="book-entry-container">
                 {books.map(book => (
                     <>
-                        <BookEntry book={book}/>
-                        <ButtonBar key={book.id} bookId={book.id} rerender={getBooks}/>
+                        <BookEntry key={book.id} book={book}/>
+                        <ButtonBar key={book.id * 1000} bookId={book.id} rerender={getBooks}/>
                     </>
                 ))}
             </div>

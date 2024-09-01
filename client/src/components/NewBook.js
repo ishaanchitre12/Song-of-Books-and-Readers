@@ -64,7 +64,7 @@ function NewBook() {
                 <button type="submit">Search</button>
             </form>
             {possibleBooks.map(book => (
-                <button className="book-cover-button" onClick={() => setSelectedBook(book)}>
+                <button key={book.id} className="book-cover-button" onClick={() => setSelectedBook(book)}>
                     <img src={book.imageLink}></img>
                 </button>
             ))}
