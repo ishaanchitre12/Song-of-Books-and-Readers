@@ -1,4 +1,4 @@
-📚 Book Notes Organizer
+# 📚 Song of Books and Readers
 A full-stack web application built with the PERN stack (PostgreSQL, Express.js, React.js, Node.js) that allows users to securely manage, organize, and review their book notes in one place.
 - 🚀 Features
 - 🔐 User Authentication – Sign up and log in securely to keep notes private.
